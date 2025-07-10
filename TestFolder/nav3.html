@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Ultra Modern Navbar Styles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* STYLE 1: Neumorphism Dark */
+        .neumorphism-dark {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            box-shadow: 20px 20px 60px #0f0f23, -20px -20px 60px #252d4f;
+        }
+        
+        .neumorphism-button {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            box-shadow: 8px 8px 16px #0f0f23, -8px -8px 16px #252d4f;
+            transition: all 0.3s ease;
+        }
+        
+        .neumorphism-button:hover {
+            box-shadow: inset 8px 8px 16px #0f0f23, inset -8px -8px 16px #252d4f;
+            transform: translateY(2px);
+        }
+        
+        /* STYLE 2: Minimal Floating */
+        .minimal-float {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .minimal-hover {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .minimal-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* STYLE 3: Retro Synthwave */
+        .synthwave-bg {
+            background: linear-gradient(45deg, #ff0080, #8000ff, #0080ff, #00ff80);
+            background-size: 400% 400%;
+            animation: synthwaveFlow 8s ease-in-out infinite;
+        }
+        
+        @keyframes synthwaveFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .synthwave-text {
+            text-shadow: 0 0 10px #ff0080, 0 0 20px #8000ff, 0 0 30px #0080ff;
+            animation: synthwaveGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes synthwaveGlow {
+            0% { text-shadow: 0 0 10px #ff0080, 0 0 20px #8000ff, 0 0 30px #0080ff; }
+            100% { text-shadow: 0 0 20px #ff0080, 0 0 30px #8000ff, 0 0 40px #0080ff; }
+        }
+        
+        /* STYLE 4: Brutalist Modern */
+        .brutalist-shape {
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24);
+            animation: brutalistShift 6s ease-in-out infinite;
+        }
+        
+        @keyframes brutalistShift {
+            0%, 100% { clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%); }
+            33% { clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%); }
+            66% { clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%); }
+        }
+        
+        .brutalist-hover {
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .brutalist-hover:hover {
+            transform: skew(-5deg, 2deg) scale(1.05);
+            filter: contrast(1.2) brightness(1.1);
+        }
+        
+        /* STYLE 5: Organic Blob */
+        .organic-blob {
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: organicMorph 8s ease-in-out infinite;
+        }
+        
+        @keyframes organicMorph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            50% { border-radius: 50% 60% 30% 60% / 70% 40% 60% 30%; }
+            75% { border-radius: 70% 30% 60% 40% / 30% 70% 40% 60%; }
+        }
+        
+        .organic-hover {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .organic-hover:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: hue-rotate(30deg);
+        }
+        
+        /* STYLE 6: Matrix Code */
+        .matrix-bg {
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, #0f0 50%, transparent 100%),
+                linear-gradient(0deg, transparent 0%, #0f0 50%, transparent 100%);
+            background-size: 2px 20px, 20px 2px;
+            animation: matrixRain 4s linear infinite;
+            opacity: 0.1;
+        }
+        
+        @keyframes matrixRain {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 20px 100px, 100px 20px; }
+        }
+        
+        .matrix-text {
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px #0f0;
+            animation: matrixFlicker 3s ease-in-out infinite;
+        }
+        
+        @keyframes matrixFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* STYLE 7: Holographic */
+        .holographic-bg {
+            background: linear-gradient(45deg, 
+                rgba(255, 0, 128, 0.2) 0%,
+                rgba(128, 0, 255, 0.2) 25%,
+                rgba(0, 128, 255, 0.2) 50%,
+                rgba(0, 255, 128, 0.2) 75%,
+                rgba(255, 128, 0, 0.2) 100%
+            );
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .holographic-text {
+            background: linear-gradient(45deg, #ff0080, #8000ff, #0080ff, #00ff80, #ff8000);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: holographicShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographicShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .holographic-hover {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .holographic-hover:hover {
+            transform: translateZ(20px);
+            filter: brightness(1.3);
+        }
+        
+        /* STYLE 8: Liquid Metal */
+        .liquid-metal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .liquid-metal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: liquidFlow 3s linear infinite;
+        }
+        
+        @keyframes liquidFlow {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+        }
+        
+        .liquid-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .liquid-hover:hover {
+            transform: scale(1.05) rotateY(10deg);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Common animations */
+        .style-transition {
+            transition: all 0.5s ease;
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <!-- Style Selector -->
+    <div class="fixed top-4 right-4 z-[100] space-y-2">
+        <button onclick="switchStyle(1)" class="block w-12 h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">NEU</button>
+        <button onclick="switchStyle(2)" class="block w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">MIN</button>
+        <button onclick="switchStyle(3)" class="block w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">SYN</button>
+        <button onclick="switchStyle(4)" class="block w-12 h-12 bg-gradient-to-br from-red-500 to-blue-500 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">BRU</button>
+        <button onclick="switchStyle(5)" class="block w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">ORG</button>
+        <button onclick="switchStyle(6)" class="block w-12 h-12 bg-black rounded-lg hover:scale-110 transition-transform duration-200 text-green-400 font-bold text-xs">MTX</button>
+        <button onclick="switchStyle(7)" class="block w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-400 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">HOL</button>
+        <button onclick="switchStyle(8)" class="block w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg hover:scale-110 transition-transform duration-200 text-white font-bold text-xs">LIQ</button>
+    </div>
+
+    <!-- STYLE 1: Neumorphism Dark -->
+    <nav id="style1" class="navbar-style fade-in">
+        <div class="fixed w-full top-0 z-50 neumorphism-dark">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="neumorphism-button px-6 py-3 rounded-2xl">
+                        <span class="text-2xl font-bold text-white">PORTFOLIO</span>
+                    </div>
+                    <div class="hidden md:flex space-x-4">
+                        <a href="#" class="neumorphism-button px-6 py-3 rounded-xl text-white font-medium">Home</a>
+                        <a href="#" class="neumorphism-button px-6 py-3 rounded-xl text-white font-medium">About</a>
+                        <a href="#" class="neumorphism-button px-6 py-3 rounded-xl text-white font-medium">Work</a>
+                        <a href="#" class="neumorphism-button px-6 py-3 rounded-xl text-white font-medium">Contact</a>
+                    </div>
+                    <div class="neumorphism-button px-6 py-3 rounded-2xl">
+                        <span class="text-white font-bold">HIRE ME</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 2: Minimal Floating -->
+    <nav id="style2" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-6 z-50 px-6">
+            <div class="max-w-4xl mx-auto minimal-float rounded-3xl px-8 py-4 minimal-hover">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-bold text-white">Portfolio</div>
+                    <div class="hidden md:flex space-x-8">
+                        <a href="#" class="text-white font-medium hover:text-blue-400 transition-colors duration-300">Home</a>
+                        <a href="#" class="text-white font-medium hover:text-blue-400 transition-colors duration-300">About</a>
+                        <a href="#" class="text-white font-medium hover:text-blue-400 transition-colors duration-300">Work</a>
+                        <a href="#" class="text-white font-medium hover:text-blue-400 transition-colors duration-300">Contact</a>
+                    </div>
+                    <button class="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition-colors duration-300">
+                        Get in Touch
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 3: Retro Synthwave -->
+    <nav id="style3" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-0 z-50 synthwave-bg">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="text-3xl font-bold text-white synthwave-text">NEON PORTFOLIO</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-white font-bold synthwave-text hover:scale-110 transition-transform duration-300">HOME</a>
+                        <a href="#" class="text-white font-bold synthwave-text hover:scale-110 transition-transform duration-300">ABOUT</a>
+                        <a href="#" class="text-white font-bold synthwave-text hover:scale-110 transition-transform duration-300">PROJECTS</a>
+                        <a href="#" class="text-white font-bold synthwave-text hover:scale-110 transition-transform duration-300">CONTACT</a>
+                    </div>
+                    <button class="bg-black text-white px-6 py-3 rounded-none font-bold synthwave-text hover:bg-white hover:text-black transition-all duration-300">
+                        HIRE ME
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 4: Brutalist Modern -->
+    <nav id="style4" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-0 z-50 brutalist-shape">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="text-3xl font-black text-white transform brutalist-hover">BRUTAL.DESIGN</div>
+                    <div class="hidden md:flex space-x-2">
+                        <a href="#" class="bg-black text-white px-4 py-2 font-black brutalist-hover">HOME</a>
+                        <a href="#" class="bg-white text-black px-4 py-2 font-black brutalist-hover">ABOUT</a>
+                        <a href="#" class="bg-red-500 text-white px-4 py-2 font-black brutalist-hover">WORK</a>
+                        <a href="#" class="bg-blue-500 text-white px-4 py-2 font-black brutalist-hover">CONTACT</a>
+                    </div>
+                    <button class="bg-yellow-400 text-black px-6 py-3 font-black brutalist-hover">
+                        HIRE NOW!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 5: Organic Blob -->
+    <nav id="style5" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-4 z-50 px-6">
+            <div class="max-w-5xl mx-auto organic-blob p-8">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-bold text-white organic-hover">Organic Portfolio</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-white font-medium organic-hover px-4 py-2 rounded-full">Home</a>
+                        <a href="#" class="text-white font-medium organic-hover px-4 py-2 rounded-full">About</a>
+                        <a href="#" class="text-white font-medium organic-hover px-4 py-2 rounded-full">Work</a>
+                        <a href="#" class="text-white font-medium organic-hover px-4 py-2 rounded-full">Contact</a>
+                    </div>
+                    <button class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold organic-hover">
+                        Connect
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 6: Matrix Code -->
+    <nav id="style6" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-0 z-50 matrix-bg">
+            <div class="matrix-rain"></div>
+            <div class="max-w-7xl mx-auto px-6 py-4 relative z-10">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-bold matrix-text">MATRIX.PORTFOLIO</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="matrix-text font-medium hover:text-green-400 transition-colors duration-300">HOME</a>
+                        <a href="#" class="matrix-text font-medium hover:text-green-400 transition-colors duration-300">ABOUT</a>
+                        <a href="#" class="matrix-text font-medium hover:text-green-400 transition-colors duration-300">PROJECTS</a>
+                        <a href="#" class="matrix-text font-medium hover:text-green-400 transition-colors duration-300">CONTACT</a>
+                    </div>
+                    <button class="border-2 border-green-400 text-green-400 px-6 py-2 font-bold hover:bg-green-400 hover:text-black transition-all duration-300">
+                        ENTER MATRIX
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 7: Holographic -->
+    <nav id="style7" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-0 z-50 holographic-bg">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-bold holographic-text">HOLOGRAPHIC</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="holographic-text font-medium holographic-hover px-4 py-2 rounded-lg">Home</a>
+                        <a href="#" class="holographic-text font-medium holographic-hover px-4 py-2 rounded-lg">About</a>
+                        <a href="#" class="holographic-text font-medium holographic-hover px-4 py-2 rounded-lg">Work</a>
+                        <a href="#" class="holographic-text font-medium holographic-hover px-4 py-2 rounded-lg">Contact</a>
+                    </div>
+                    <button class="bg-gradient-to-r from-purple-400 to-pink-400 text-white px-6 py-3 rounded-lg font-bold holographic-hover">
+                        Connect
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STYLE 8: Liquid Metal -->
+    <nav id="style8" class="navbar-style hidden fade-in">
+        <div class="fixed w-full top-4 z-50 px-6">
+            <div class="max-w-6xl mx-auto liquid-metal p-6 liquid-hover">
+                <div class="flex items-center justify-between relative z-10">
+                    <div class="text-2xl font-bold text-white">Liquid Portfolio</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-white font-medium liquid-hover px-4 py-2 rounded-full">Home</a>
+                        <a href="#" class="text-white font-medium liquid-hover px-4 py-2 rounded-full">About</a>
+                        <a href="#" class="text-white font-medium liquid-hover px-4 py-2 rounded-full">Work</a>
+                        <a href="#" class="text-white font-medium liquid-hover px-4 py-2 rounded-full">Contact</a>
+                    </div>
+                    <button class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold liquid-hover">
+                        Hire Me
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Demo Content -->
+    <div class="pt-32 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-6xl font-bold text-white mb-8">
+                8 ULTRA MODERN NAVBAR STYLES
+            </h1>
+            <p class="text-xl text-gray-300 mb-12">
+                Click the buttons on the right to switch between different cutting-edge navbar designs
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Neumorphism Dark</h3>
+                    <p class="text-gray-300">Soft shadows and depth with modern dark theme</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Minimal Floating</h3>
+                    <p class="text-gray-300">Clean glassmorphism with floating effect</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Retro Synthwave</h3>
+                    <p class="text-gray-300">80s inspired neon colors and effects</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Brutalist Modern</h3>
+                    <p class="text-gray-300">Bold shapes and aggressive design language</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Organic Blob</h3>
+                    <p class="text-gray-300">Natural flowing shapes with morphing effects</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Matrix Code</h3>
+                    <p class="text-gray-300">Cyberpunk aesthetic with digital rain effect</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Holographic</h3>
+                    <p class="text-gray-300">Iridescent colors with rainbow gradients</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-4">Liquid Metal</h3>
+                    <p class="text-gray-300">Flowing metallic surfaces with shine effects</p>
+                </div>
+            </div>
+            
+            <div class="space-y-32">
+                <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-12 border border-white/10">
+                    <h2 class="text-4xl font-bold text-white mb-6">Choose Your Style</h2>
+                    <p class="text-xl text-gray-300">Each navbar style represents a different design philosophy and aesthetic approach. From the subtle depth of neumorphism to the bold aggression of brutalism, find the perfect match for your portfolio's personality.</p>
+                </div>
+                
+                <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-12 border border-white/10">
+                    <h2 class="text-4xl font-bold text-white mb-6">Modern Aesthetics</h2>
+                    <p class="text-xl text-gray-300">These designs push the boundaries of web aesthetics, incorporating the latest trends in UI/UX design while maintaining excellent usability and performance across all devices.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchStyle(styleNumber) {
+            // Hide all navbar styles
+            document.querySelectorAll('.navbar-style').forEach(nav => {
+                nav.classList.add('hidden');
+            });
+            
+            // Show selected style
+            document.getElementById('style' + styleNumber).classList.remove('hidden');
+            
+            // Add fade-in animation
+            document.getElementById('style' + styleNumber).classList.add('fade-in');
+            
+            // Remove fade-in class after animation
+            setTimeout(() => {
+                document.getElementById('style' + styleNumber).classList.remove('fade-in');
+            }, 1000);
+        }
+        
+        // Initialize with first style
+        switchStyle(1);
+        
+        // Add some interactive effects
+        document.addEventListener('mousemove', (e) => {
+            const cursor = { x: e.clientX, y: e.clientY };
+            
+            // Add subtle parallax effect to current navbar
+            const activeNavbar = document.querySelector('.navbar-style:not(.hidden)');
+            if (activeNavbar) {
+                const rect = activeNavbar.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const deltaX = (cursor.x - centerX) * 0.01;
+                const deltaY = (cursor.y - centerY) * 0.01;
+                
+                activeNavbar.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

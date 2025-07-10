@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hor Ratha - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        
+        
+        @keyframes portfolio-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .portfolio-avatar-hexagon {
+            width: 280px;
+            height: 280px;
+            position: relative;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: portfolio-float-avatar 3s ease-in-out infinite;
+        }
+        
+        @media (max-width: 640px) {
+            .portfolio-avatar-hexagon {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .portfolio-avatar-hexagon {
+                width: 160px;
+                height: 160px;
+            }
+        }
+        
+        @keyframes portfolio-float-avatar {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .portfolio-avatar-ring {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+            background-size: 400% 400%;
+            animation: portfolio-gradient-spin 3s ease infinite;
+            padding: 6px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .portfolio-avatar-inner {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 4px;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .portfolio-avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(1.1) contrast(1.1);
+            transition: transform 0.3s ease;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .portfolio-avatar-container:hover .portfolio-avatar-image {
+            transform: scale(1.05);
+        }
+        
+        @keyframes portfolio-gradient-spin {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .portfolio-typewriter {
+            color: #ffffff;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(138, 92, 246, 0.3),
+                0 0 30px rgba(138, 92, 246, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .portfolio-typewriter::after {
+            content: '|';
+            color: #8b5cf6;
+            animation: portfolio-blink 1s infinite;
+            text-shadow: 
+                0 0 5px #8b5cf6,
+                0 0 10px #8b5cf6;
+        }
+        
+        .portfolio-typewriter.portfolio-finished::after {
+            display: none;
+        }
+        
+        @keyframes portfolio-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .portfolio-status-badge {
+            animation: portfolio-float-badge 3s ease-in-out infinite;
+        }
+        
+        @keyframes portfolio-float-badge {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .portfolio-glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .portfolio-hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .portfolio-hero-title {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .portfolio-hero-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .portfolio-hero-title {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+            
+            .portfolio-hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Ensure proper spacing on mobile */
+        @media (max-width: 640px) {
+            .portfolio-mobile-spacing {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-x-hidden">
+    <!-- Hero Section -->
+    <section class="portfolio-hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Hero Content -->
+        <div class="portfolio-hero-content px-4 max-w-6xl mx-auto w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh]">
+                <!-- Avatar Section -->
+                <div class="flex justify-center order-1 lg:order-1">
+                    <div class="portfolio-avatar-container portfolio-avatar-hexagon">
+                        <div class="portfolio-avatar-ring">
+                            <div class="portfolio-avatar-inner">
+                                <img src="image/image.png" 
+                                     alt="Hor Ratha" 
+                                     class="portfolio-avatar-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Section -->
+                <div class="text-center lg:text-left order-2 lg:order-2 portfolio-mobile-spacing">
+                    <!-- Status Badge -->
+                    <div class="portfolio-status-badge inline-flex items-center px-4 py-2 rounded-full portfolio-glass-effect text-white text-sm font-medium mb-6">
+                        <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                        Available for new projects
+                    </div>
+                    
+                    <!-- Main Title -->
+                    <h1 class="portfolio-hero-title text-4xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-lg">
+                        Hi, I'm
+                        <br class="block">
+                        <span class="portfolio-typewriter">Hor Ratha</span>
+                    </h1>
+                    
+                    <!-- Subtitle -->
+                    <p class="portfolio-hero-subtitle text-lg md:text-xl lg:text-2xl mb-8 text-gray-200 drop-shadow-md font-light">
+                        Full Stack Developer & 
+                        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+                            Designer
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full animate-ping opacity-60 z-5"></div>
+        <div class="absolute bottom-20 right-10 w-6 h-6 bg-purple-400 rounded-full animate-bounce opacity-60 z-5"></div>
+        <div class="absolute top-1/2 left-5 w-3 h-3 bg-pink-400 rounded-full animate-pulse opacity-60 z-5"></div>
+        <div class="absolute top-1/3 right-20 w-2 h-2 bg-cyan-400 rounded-full animate-ping opacity-40 z-5"></div>
+        <div class="absolute bottom-1/3 left-20 w-5 h-5 bg-violet-400 rounded-full animate-bounce opacity-50 z-5"></div>
+    </section>
+
+    <script>
+        // Typewriter effect for name only
+        const nameElement = document.querySelector('.portfolio-typewriter');
+        if (nameElement) {
+            const fullName = "Hor Ratha";
+            nameElement.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < fullName.length) {
+                    nameElement.textContent += fullName.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    // Remove the cursor after typing is complete
+                    setTimeout(() => {
+                        nameElement.classList.add('portfolio-finished');
+                    }, 2000);
+                }
+            };
+            
+            // Start typing after a short delay
+            setTimeout(typeWriter, 1000);
+        }
+    </script>
+</body>
+</html>

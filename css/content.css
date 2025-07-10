@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes portfolio-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.portfolio-avatar-hexagon {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    animation: portfolio-float-avatar 3s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+    .portfolio-avatar-hexagon {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-avatar-hexagon {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@keyframes portfolio-float-avatar {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.portfolio-avatar-ring {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+    background-size: 400% 400%;
+    animation: portfolio-gradient-spin 3s ease infinite;
+    padding: 6px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.portfolio-avatar-inner {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 4px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.portfolio-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(1.1) contrast(1.1);
+    transition: transform 0.3s ease;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.portfolio-avatar-container:hover .portfolio-avatar-image {
+    transform: scale(1.05);
+}
+
+@keyframes portfolio-gradient-spin {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.portfolio-typewriter {
+    color: #f76868;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(138, 92, 246, 0.3),
+        0 0 30px rgba(138, 92, 246, 0.2);
+    position: relative;
+    display: inline-block;
+}
+
+.portfolio-typewriter::after {
+    content: '|';
+    color: #8b5cf6;
+    animation: portfolio-blink 1s infinite;
+    text-shadow: 
+        0 0 5px #8b5cf6,
+        0 0 10px #8b5cf6;
+}
+
+.portfolio-typewriter.portfolio-finished::after {
+    display: none;
+}
+
+@keyframes portfolio-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.portfolio-status-badge {
+    animation: portfolio-float-badge 3s ease-in-out infinite;
+}
+
+@keyframes portfolio-float-badge {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.portfolio-glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.portfolio-hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    .portfolio-hero-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+    
+    .portfolio-hero-subtitle {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-hero-title {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .portfolio-hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Improved Mobile Spacing - Reduce gap between image and text */
+@media (max-width: 1023px) {
+    .portfolio-mobile-spacing {
+        margin-top: 0.5rem; /* Reduced from default */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .portfolio-avatar-container {
+        margin-bottom: 0.5rem; /* Reduced bottom margin */
+    }
+    
+    /* Reduce grid gap on mobile */
+    .mobile-grid-gap {
+        gap: 1rem !important;
+    }
+}
+
+/* Even tighter spacing for very small screens */
+@media (max-width: 640px) {
+    .portfolio-mobile-spacing {
+        margin-top: 0.25rem; /* Even smaller gap */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

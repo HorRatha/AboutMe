@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Hero Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(120, 219, 226, 0.15) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* Circle Avatar */
+        .avatar-circle {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        /* Square Avatar */
+        .avatar-square {
+            width: 320px;
+            height: 320px;
+            border-radius: 24px;
+            position: relative;
+        }
+        
+        /* Hexagon Avatar */
+        .avatar-hexagon {
+            width: 320px;
+            height: 320px;
+            position: relative;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        /* Diamond Avatar */
+        .avatar-diamond {
+            width: 320px;
+            height: 320px;
+            position: relative;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .avatar-ring {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+            background-size: 400% 400%;
+            animation: gradient-spin 3s ease infinite;
+            padding: 6px;
+        }
+        
+        .avatar-ring.square {
+            border-radius: 24px;
+        }
+        
+        .avatar-ring.hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .avatar-ring.diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .avatar-inner.circle {
+            border-radius: 50%;
+        }
+        
+        .avatar-inner.square {
+            border-radius: 20px;
+        }
+        
+        .avatar-inner.hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .avatar-inner.diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(1.1) contrast(1.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar-image.circle {
+            border-radius: 50%;
+        }
+        
+        .avatar-image.square {
+            border-radius: 16px;
+        }
+        
+        .avatar-image.hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .avatar-image.diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .avatar-container:hover .avatar-image {
+            transform: scale(1.05);
+        }
+        
+        @keyframes gradient-spin {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid #ff0040;
+            white-space: nowrap;
+            letter-spacing: 0.05em;
+            animation: typewriter 3s steps(40, end), neon-pulse 2s infinite alternate;
+            color: #ff0040;
+            text-shadow: 
+                0 0 5px #ff0040,
+                0 0 10px #ff0040,
+                0 0 15px #ff0040,
+                0 0 20px #ff0040,
+                0 0 35px #ff0040,
+                0 0 40px #ff0040,
+                0 0 50px #ff0040,
+                0 0 75px #ff0040;
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes neon-pulse {
+            from {
+                text-shadow: 
+                    0 0 5px #ff0040,
+                    0 0 10px #ff0040,
+                    0 0 15px #ff0040,
+                    0 0 20px #ff0040,
+                    0 0 35px #ff0040,
+                    0 0 40px #ff0040,
+                    0 0 50px #ff0040,
+                    0 0 75px #ff0040;
+            }
+            to {
+                text-shadow: 
+                    0 0 2px #ff0040,
+                    0 0 5px #ff0040,
+                    0 0 8px #ff0040,
+                    0 0 12px #ff0040,
+                    0 0 20px #ff0040,
+                    0 0 25px #ff0040,
+                    0 0 30px #ff0040,
+                    0 0 40px #ff0040;
+            }
+        }
+        
+        .modern-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .modern-button:hover::before {
+            left: 100%;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-badge {
+            animation: float-badge 3s ease-in-out infinite;
+        }
+        
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="hero-gradient min-h-screen flex items-center justify-center">
+    <div class="relative z-10 px-4 max-w-7xl mx-auto">
+        <!-- Layout Controls -->
+        <div class="text-center mb-8">
+            <div class="inline-flex glass-effect rounded-full p-1 mb-4">
+                <button onclick="changeLayout('left')" class="layout-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all" id="leftBtn">Left</button>
+                <button onclick="changeLayout('center')" class="layout-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all bg-white/20" id="centerBtn">Center</button>
+                <button onclick="changeLayout('right')" class="layout-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all" id="rightBtn">Right</button>
+            </div>
+            <div class="inline-flex glass-effect rounded-full p-1">
+                <button onclick="changeShape('circle')" class="shape-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all bg-white/20" id="circleBtn">Circle</button>
+                <button onclick="changeShape('square')" class="shape-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all" id="squareBtn">Square</button>
+                <button onclick="changeShape('hexagon')" class="shape-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all" id="hexagonBtn">Hexagon</button>
+                <button onclick="changeShape('diamond')" class="shape-btn px-4 py-2 rounded-full text-white text-sm font-medium transition-all" id="diamondBtn">Diamond</button>
+            </div>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]" id="heroGrid">
+            <!-- Avatar Section -->
+            <div class="flex justify-center order-1 lg:order-1" id="avatarSection">
+                <div class="avatar-container avatar-circle" id="avatarContainer">
+                    <div class="avatar-ring" id="avatarRing">
+                        <div class="avatar-inner circle" id="avatarInner">
+                            <img src="image/image.png" 
+                                 alt="Hor Ratha" 
+                                 class="avatar-image circle" 
+                                 id="avatarImage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="text-center lg:text-left order-2 lg:order-2" id="contentSection">
+                <!-- Status Badge -->
+                <div class="floating-badge inline-flex items-center px-4 py-2 rounded-full glass-effect text-white text-sm font-medium mb-6">
+                    <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                    Available for new projects
+                </div>
+                
+                <!-- Main Title -->
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 typewriter drop-shadow-lg">
+                    Hi, I'm Hor Ratha
+                </h1>
+                
+                <!-- Subtitle -->
+                <p class="text-xl md:text-2xl mb-8 text-gray-200 drop-shadow-md font-light">
+                    Full Stack Developer & 
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+                        Designer
+                    </span>
+                </p>
+                
+                <!-- Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <button class="modern-button bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-white shadow-2xl hover:shadow-blue-500/25 min-w-[200px]">
+                        <span class="relative z-10">View My Work</span>
+                    </button>
+                    <button class="modern-button glass-effect hover:bg-white/20 px-8 py-4 rounded-full font-semibold transition-all duration-300 text-white shadow-2xl hover:shadow-white/25 min-w-[200px]">
+                        <span class="relative z-10">Contact Me</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLayout = 'center';
+        let currentShape = 'circle';
+        
+        function changeLayout(layout) {
+            currentLayout = layout;
+            const heroGrid = document.getElementById('heroGrid');
+            const avatarSection = document.getElementById('avatarSection');
+            const contentSection = document.getElementById('contentSection');
+            
+            // Reset button states
+            document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('bg-white/20'));
+            document.getElementById(layout + 'Btn').classList.add('bg-white/20');
+            
+            if (layout === 'center') {
+                heroGrid.className = 'text-center min-h-[80vh] flex flex-col items-center justify-center';
+                avatarSection.className = 'flex justify-center mb-8';
+                contentSection.className = 'text-center';
+                avatarSection.style.order = '1';
+                contentSection.style.order = '2';
+            } else if (layout === 'left') {
+                heroGrid.className = 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]';
+                avatarSection.className = 'flex justify-center order-1 lg:order-1';
+                contentSection.className = 'text-center lg:text-left order-2 lg:order-2';
+            } else if (layout === 'right') {
+                heroGrid.className = 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]';
+                avatarSection.className = 'flex justify-center order-1 lg:order-2';
+                contentSection.className = 'text-center lg:text-right order-2 lg:order-1';
+            }
+        }
+        
+        function changeShape(shape) {
+            currentShape = shape;
+            const avatarContainer = document.getElementById('avatarContainer');
+            const avatarRing = document.getElementById('avatarRing');
+            const avatarInner = document.getElementById('avatarInner');
+            const avatarImage = document.getElementById('avatarImage');
+            
+            // Reset button states
+            document.querySelectorAll('.shape-btn').forEach(btn => btn.classList.remove('bg-white/20'));
+            document.getElementById(shape + 'Btn').classList.add('bg-white/20');
+            
+            // Remove all shape classes
+            avatarContainer.className = 'avatar-container';
+            avatarRing.className = 'avatar-ring';
+            avatarInner.className = 'avatar-inner';
+            avatarImage.className = 'avatar-image';
+            
+            // Add new shape classes
+            avatarContainer.classList.add('avatar-' + shape);
+            avatarRing.classList.add(shape);
+            avatarInner.classList.add(shape);
+            avatarImage.classList.add(shape);
+        }
+    </script>
+</body>
+</html>

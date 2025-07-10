@@ -1,0 +1,265 @@
+
+        /* Liquid Metal Developer Vibe */
+        .liquid-vibe {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #1a1a2e 75%, #16213e 100%);
+            background-size: 400% 400%;
+            animation: vibeFlow 8s ease-in-out infinite;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes vibeFlow {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+        
+        .liquid-vibe::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: liquidShine 6s linear infinite;
+        }
+        
+        @keyframes liquidShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+        }
+        
+        .vibe-text {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            background: linear-gradient(45deg, #64ffda, #00bcd4, #2196f3, #64ffda);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textVibe 4s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+        
+        @keyframes textVibe {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Enhanced Navigation Links with Advanced Hover Effects */
+        .nav-link {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            transform-style: preserve-3d;
+        }
+        
+        /* Advanced Hover Effects */
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(100, 255, 218, 0.0), rgba(0, 188, 212, 0.3), rgba(100, 255, 218, 0.0));
+            border-radius: 12px;
+            transform: scale(0);
+            transition: all 0.5s ease-out;
+            z-index: -1;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #64ffda, #00bcd4, #2196f3);
+            transition: all 0.5s ease-out;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* Perspective and Magnetic Effects */
+        .nav-link:hover {
+            transform: translateY(-3px) rotateY(8deg) rotateX(5deg) scale(1.05);
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.7);
+            color: #64ffda;
+        }
+        
+        .nav-link:hover::before {
+            transform: scale(1);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Glitch Effect on Hover */
+        .nav-link:hover .link-text {
+            animation: textGlitch 0.5s ease-in-out;
+        }
+        
+        @keyframes textGlitch {
+            0%, 100% { 
+                transform: translateX(0px);
+                filter: hue-rotate(0deg);
+            }
+            20% { 
+                transform: translateX(-1px);
+                filter: hue-rotate(90deg);
+            }
+            40% { 
+                transform: translateX(1px);
+                filter: hue-rotate(180deg);
+            }
+            60% { 
+                transform: translateX(-1px);
+                filter: hue-rotate(270deg);
+            }
+            80% { 
+                transform: translateX(1px);
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        /* Magnetic Pull Effect */
+        .nav-link:hover {
+            animation: magneticPull 0.6s ease-out forwards;
+        }
+        
+        @keyframes magneticPull {
+            0% { transform: translateY(-3px) rotateY(8deg) rotateX(5deg) scale(1.05); }
+            50% { transform: translateY(-5px) rotateY(12deg) rotateX(8deg) scale(1.1); }
+            100% { transform: translateY(-3px) rotateY(8deg) rotateX(5deg) scale(1.05); }
+        }
+        
+        /* Enhanced CTA Button */
+        .cta-button {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(45deg, #64ffda, #00bcd4);
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+            text-shadow: none;
+            font-weight: 800;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.0));
+            transform: translateX(-100%) skewX(-12deg);
+            transition: transform 0.8s ease-out;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.1) rotateY(10deg) rotateX(5deg);
+            box-shadow: 0 12px 35px rgba(100, 255, 218, 0.6);
+            background: linear-gradient(45deg, #00bcd4, #2196f3);
+        }
+        
+        .cta-button:hover::before {
+            transform: translateX(100%) skewX(-12deg);
+        }
+        
+        .navbar-container {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .navbar-container:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            margin-top: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .mobile-menu .nav-link {
+            padding: 16px 20px;
+            margin: 8px 0;
+            border-radius: 16px;
+        }
+        
+        .mobile-menu .nav-link:hover {
+            transform: translateX(8px) scale(1.05);
+            background: rgba(100, 255, 218, 0.1);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .hamburger:hover {
+            transform: scale(1.1);
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #64ffda;
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .desktop-menu {
+                display: none;
+            }
+        }
+    

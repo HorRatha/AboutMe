@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Glitch Animation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .glitch-text {
+            text-shadow: 
+                0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 1s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            15% {
+                text-shadow: 
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            16% {
+                text-shadow: 
+                    -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            49% {
+                text-shadow: 
+                    -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                    0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                    -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            50% {
+                text-shadow: 
+                    0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            99% {
+                text-shadow: 
+                    0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                    0.05em 0 0 rgba(0, 255, 0, 0.75),
+                    0 -0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+        }
+        
+        /* Smooth scroll for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <div id="glitch-container" class="relative w-full h-screen bg-black overflow-hidden">
+        <canvas id="glitch-canvas" class="block w-full h-full"></canvas>
+        <div id="outer-vignette" class="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]"></div>
+        <div id="center-vignette" class="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)] hidden"></div>
+        
+        <!-- Portfolio Content -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="text-center max-w-4xl mx-auto px-8 pointer-events-auto">
+                <!-- Main Title -->
+                <h1 class="text-6xl md:text-8xl font-bold text-white mb-4 tracking-wider glitch-text">
+                    YOUR NAME
+                </h1>
+                
+                <!-- Subtitle -->
+                <p class="text-xl md:text-2xl text-green-400 mb-8 font-mono tracking-wide">
+                    Full Stack Developer & Creative Coder
+                </p>
+                
+                <!-- Description -->
+                <p class="text-gray-300 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+                    Crafting digital experiences through code, design, and innovation. 
+                    Specializing in modern web technologies and interactive applications.
+                </p>
+                
+                <!-- Skills Tags -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-mono border border-green-500/30">React</span>
+                    <span class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-full text-sm font-mono border border-blue-500/30">Node.js</span>
+                    <span class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-full text-sm font-mono border border-purple-500/30">JavaScript</span>
+                    <span class="px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-full text-sm font-mono border border-yellow-500/30">Python</span>
+                    <span class="px-4 py-2 bg-red-500/20 text-red-400 rounded-full text-sm font-mono border border-red-500/30">Three.js</span>
+                    <span class="px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-mono border border-cyan-500/30">MongoDB</span>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#projects" class="group relative px-8 py-4 bg-transparent border-2 border-green-500 text-green-400 hover:bg-green-500 hover:text-black transition-all duration-300 font-mono tracking-wide uppercase">
+                        <span class="relative z-10">View Projects</span>
+                        <div class="absolute inset-0 bg-green-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                    </a>
+                    
+                    <a href="#contact" class="group relative px-8 py-4 bg-transparent border-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-black transition-all duration-300 font-mono tracking-wide uppercase">
+                        <span class="relative z-10">Get In Touch</span>
+                        <div class="absolute inset-0 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                    </a>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="flex justify-center gap-6 mt-12">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.627-5.373-12-12-12"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class LetterGlitch {
+            constructor(options = {}) {
+                this.glitchColors = options.glitchColors || ['#2b4539', '#61dca3', '#61b3dc'];
+                this.glitchSpeed = options.glitchSpeed || 50;
+                this.centerVignette = options.centerVignette || false;
+                this.outerVignette = options.outerVignette !== false;
+                this.smooth = options.smooth !== false;
+                
+                this.canvas = document.getElementById('glitch-canvas');
+                this.context = this.canvas.getContext('2d');
+                this.animationId = null;
+                this.letters = [];
+                this.grid = { columns: 0, rows: 0 };
+                this.lastGlitchTime = Date.now();
+                
+                this.fontSize = 16;
+                this.charWidth = 10;
+                this.charHeight = 20;
+                
+                this.lettersAndSymbols = [
+                    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                    '!', '@', '#', '$', '&', '*', '(', ')', '-', '_', '+', '=', '/',
+                    '[', ']', '{', '}', ';', ':', '<', '>', ',', '0', '1', '2', '3',
+                    '4', '5', '6', '7', '8', '9'
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupVignettes();
+                this.resizeCanvas();
+                this.animate();
+                
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        cancelAnimationFrame(this.animationId);
+                        this.resizeCanvas();
+                        this.animate();
+                    }, 100);
+                });
+            }
+            
+            setupVignettes() {
+                const outerVignette = document.getElementById('outer-vignette');
+                const centerVignette = document.getElementById('center-vignette');
+                
+                if (this.outerVignette) {
+                    outerVignette.classList.remove('hidden');
+                } else {
+                    outerVignette.classList.add('hidden');
+                }
+                
+                if (this.centerVignette) {
+                    centerVignette.classList.remove('hidden');
+                } else {
+                    centerVignette.classList.add('hidden');
+                }
+            }
+            
+            getRandomChar() {
+                return this.lettersAndSymbols[Math.floor(Math.random() * this.lettersAndSymbols.length)];
+            }
+            
+            getRandomColor() {
+                return this.glitchColors[Math.floor(Math.random() * this.glitchColors.length)];
+            }
+            
+            hexToRgb(hex) {
+                const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+                hex = hex.replace(shorthandRegex, (m, r, g, b) => {
+                    return r + r + g + g + b + b;
+                });
+
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? {
+                    r: parseInt(result[1], 16),
+                    g: parseInt(result[2], 16),
+                    b: parseInt(result[3], 16)
+                } : null;
+            }
+            
+            interpolateColor(start, end, factor) {
+                const result = {
+                    r: Math.round(start.r + (end.r - start.r) * factor),
+                    g: Math.round(start.g + (end.g - start.g) * factor),
+                    b: Math.round(start.b + (end.b - start.b) * factor),
+                };
+                return `rgb(${result.r}, ${result.g}, ${result.b})`;
+            }
+            
+            calculateGrid(width, height) {
+                const columns = Math.ceil(width / this.charWidth);
+                const rows = Math.ceil(height / this.charHeight);
+                return { columns, rows };
+            }
+            
+            initializeLetters(columns, rows) {
+                this.grid = { columns, rows };
+                const totalLetters = columns * rows;
+                this.letters = Array.from({ length: totalLetters }, () => ({
+                    char: this.getRandomChar(),
+                    color: this.getRandomColor(),
+                    targetColor: this.getRandomColor(),
+                    colorProgress: 1,
+                }));
+            }
+            
+            resizeCanvas() {
+                const parent = this.canvas.parentElement;
+                if (!parent) return;
+
+                const dpr = window.devicePixelRatio || 1;
+                const rect = parent.getBoundingClientRect();
+
+                this.canvas.width = rect.width * dpr;
+                this.canvas.height = rect.height * dpr;
+
+                this.canvas.style.width = `${rect.width}px`;
+                this.canvas.style.height = `${rect.height}px`;
+
+                this.context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                const { columns, rows } = this.calculateGrid(rect.width, rect.height);
+                this.initializeLetters(columns, rows);
+
+                this.drawLetters();
+            }
+            
+            drawLetters() {
+                if (!this.context || this.letters.length === 0) return;
+                
+                const { width, height } = this.canvas.getBoundingClientRect();
+                this.context.clearRect(0, 0, width, height);
+                this.context.font = `${this.fontSize}px monospace`;
+                this.context.textBaseline = 'top';
+
+                this.letters.forEach((letter, index) => {
+                    const x = (index % this.grid.columns) * this.charWidth;
+                    const y = Math.floor(index / this.grid.columns) * this.charHeight;
+                    this.context.fillStyle = letter.color;
+                    this.context.fillText(letter.char, x, y);
+                });
+            }
+            
+            updateLetters() {
+                if (!this.letters || this.letters.length === 0) return;
+
+                const updateCount = Math.max(1, Math.floor(this.letters.length * 0.05));
+
+                for (let i = 0; i < updateCount; i++) {
+                    const index = Math.floor(Math.random() * this.letters.length);
+                    if (!this.letters[index]) continue;
+
+                    this.letters[index].char = this.getRandomChar();
+                    this.letters[index].targetColor = this.getRandomColor();
+
+                    if (!this.smooth) {
+                        this.letters[index].color = this.letters[index].targetColor;
+                        this.letters[index].colorProgress = 1;
+                    } else {
+                        this.letters[index].colorProgress = 0;
+                    }
+                }
+            }
+            
+            handleSmoothTransitions() {
+                let needsRedraw = false;
+                this.letters.forEach((letter) => {
+                    if (letter.colorProgress < 1) {
+                        letter.colorProgress += 0.05;
+                        if (letter.colorProgress > 1) letter.colorProgress = 1;
+
+                        const startRgb = this.hexToRgb(letter.color);
+                        const endRgb = this.hexToRgb(letter.targetColor);
+                        if (startRgb && endRgb) {
+                            letter.color = this.interpolateColor(startRgb, endRgb, letter.colorProgress);
+                            needsRedraw = true;
+                        }
+                    }
+                });
+
+                if (needsRedraw) {
+                    this.drawLetters();
+                }
+            }
+            
+            animate() {
+                const now = Date.now();
+                if (now - this.lastGlitchTime >= this.glitchSpeed) {
+                    this.updateLetters();
+                    this.drawLetters();
+                    this.lastGlitchTime = now;
+                }
+
+                if (this.smooth) {
+                    this.handleSmoothTransitions();
+                }
+
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+            
+            destroy() {
+                cancelAnimationFrame(this.animationId);
+                window.removeEventListener('resize', this.handleResize);
+            }
+        }
+        
+        // Initialize the glitch animation
+        const glitch = new LetterGlitch({
+            glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
+            glitchSpeed: 50,
+            centerVignette: false,
+            outerVignette: true,
+            smooth: true
+        });
+        
+        // Optional: Add controls or modify settings
+        // You can customize the animation by changing the options above
+    </script>
+</body>
+</html>
