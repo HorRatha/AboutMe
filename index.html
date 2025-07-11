@@ -59,6 +59,7 @@
     <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/content.css">
     <link rel="stylesheet" href="./css/footer+loading.css">
+    <link rel="stylesheet" href="./css/about.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
     
 
@@ -598,73 +599,218 @@
     </section>
     
     <!-- About Section -->
-    <section id="about" class="section-bg py-20 px-4 ">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 glow-text fade-in">About Me</h2>
-                <p class="text-xl text-gray-300 fade-in fade-in-delay-1">Passionate developer crafting digital experiences</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- About Content -->
-                <div class="fade-in fade-in-delay-2">
-                    <h3 class="text-2xl font-bold mb-6 text-green-400">Creative Developer & Designer</h3>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        I'm a passionate full-stack developer with 3+ years of experience creating innovative web solutions. 
-                        I specialize in modern JavaScript frameworks, responsive design, and creating seamless user experiences 
-                        that combine functionality with stunning visuals.
-                    </p>
-                    <p class="text-gray-300 mb-8 leading-relaxed">
-                        My expertise spans across frontend and backend development, with a keen eye for design and user experience. 
-                        I love turning complex problems into simple, beautiful solutions.
-                    </p>
-                    <button class="cta-button">Download CV</button>
+     <section class="About-us-container">
+        <!-- Floating background elements -->
+        <div class="floating-bg"></div>
+        <div class="floating-bg"></div>
+        <div class="floating-bg"></div>
+        
+        <section class="py-20 px-4 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <!-- Header -->
+                <div class="text-center mb-16">
+                    <h1 class="section-title">About Me</h1>
+                    <p class="section-subtitle">Crafting the future, one line of code at a time</p>
                 </div>
                 
-                <!-- Skills -->
-                <div class="fade-in fade-in-delay-3">
-                    <h3 class="text-2xl font-bold mb-6 text-green-400">Technical Skills</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-white font-medium">JavaScript/React</span>
-                                <span class="text-green-400">95%</span>
+                <!-- Main Content -->
+                <div class="grid lg:grid-cols-12 gap-8 mb-16">
+                    <!-- Profile Card -->
+                    <div class="lg:col-span-4">
+                        <div class="glass-card p-8 h-full">
+                            <!-- Profile Image -->
+                            <div class="profile-image">
+                                <img src="./image/image.png" alt="Hor Ratha" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="w-full h-full rounded-full bg-slate-800 flex items-center justify-center text-3xl" style="display: none;">
+                                    👨‍💻
+                                </div>
                             </div>
-                            <div class="skill-bar h-3">
-                                <div class="skill-progress" style="width: 95%;"></div>
+                            
+                            <div class="text-center mb-8">
+                                <h2 class="text-2xl font-bold mb-2 gradient-text">Hor Ratha</h2>
+                                <p class="text-slate-400 text-lg">Full-Stack Developer</p>
                             </div>
+                            
+                            <!-- Quick Stats -->
+                            <div class="grid grid-cols-2 gap-4 mb-8">
+                                <div class="stat-card">
+                                    <div class="text-2xl font-bold gradient-text mb-1">5+</div>
+                                    <div class="text-sm text-slate-400">Projects</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="text-2xl font-bold gradient-text mb-1">1+</div>
+                                    <div class="text-sm text-slate-400">Years</div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full cta-button">
+                                Download CV
+                            </button>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-white font-medium">Node.js/Express</span>
-                                <span class="text-green-400">90%</span>
-                            </div>
-                            <div class="skill-bar h-3">
-                                <div class="skill-progress" style="width: 90%;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-white font-medium">UI/UX Design</span>
-                                <span class="text-green-400">85%</span>
-                            </div>
-                            <div class="skill-bar h-3">
-                                <div class="skill-progress" style="width: 85%;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-white font-medium">Database Management</span>
-                                <span class="text-green-400">80%</span>
-                            </div>
-                            <div class="skill-bar h-3">
-                                <div class="skill-progress" style="width: 80%;"></div>
+                    </div>
+                    
+                    <!-- Journey Content -->
+                    <div class="lg:col-span-8">
+                        <div class="glass-card p-8">
+                            <h3 class="text-3xl font-bold mb-6 gradient-text">My Journey</h3>
+                            <p class="text-slate-300 mb-8 text-lg leading-relaxed">
+                                I'm an aspiring full-stack developer on an exciting journey of continuous learning and growth. 
+                                Through dedicated study and hands-on experience, I'm building the skills to transform ideas into 
+                                digital solutions that make a difference.
+                            </p>
+                            
+                            <!-- Timeline -->
+                            <div class="space-y-6">
+                                <div class="timeline-item">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white text-lg">Full-Stack Development Journey</h4>
+                                        <span class="achievement-badge">Current</span>
+                                    </div>
+                                    <p class="text-sm text-slate-400 mb-3">2025 - Present</p>
+                                    <p class="text-slate-300 mb-4 leading-relaxed">
+                                        Embarking on comprehensive full-stack development training through ISTAD scholarship program. 
+                                        Learning both frontend and backend technologies to become a well-rounded developer.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Full-Stack Development</span>
+                                        <span class="skill-tag">ISTAD Scholarship</span>
+                                        <span class="skill-tag">Backend Integration</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white text-lg">Frontend Development Focus</h4>
+                                        <span class="achievement-badge">Completed</span>
+                                    </div>
+                                    <p class="text-sm text-slate-400 mb-3">2023 - 2024</p>
+                                    <p class="text-slate-300 mb-4 leading-relaxed">
+                                        Specialized in frontend web development, mastering modern frameworks and creating responsive, 
+                                        user-friendly interfaces. Built several projects to strengthen my practical skills.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">React</span>
+                                        <span class="skill-tag">JavaScript</span>
+                                        <span class="skill-tag">CSS/HTML</span>
+                                        <span class="skill-tag">Responsive Design</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white text-lg">Computer Science Foundation</h4>
+                                        <span class="achievement-badge">Foundation</span>
+                                    </div>
+                                    <p class="text-sm text-slate-400 mb-3">2022 - 2023</p>
+                                    <p class="text-slate-300 mb-4 leading-relaxed">
+                                        Started my academic journey in Computer Science, building a strong foundation in programming 
+                                        concepts, algorithms, and software development principles.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Programming Fundamentals</span>
+                                        <span class="skill-tag">Algorithms</span>
+                                        <span class="skill-tag">Data Structures</span>
+                                        <span class="skill-tag">Problem Solving</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Skills Section -->
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Technical Skills -->
+                    <div class="glass-card p-8">
+                        <h3 class="text-3xl font-bold mb-8 gradient-text">Technical Skills</h3>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="text-center">
+                                <div class="progress-ring">
+                                    <svg>
+                                        <defs>
+                                            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+                                            </linearGradient>
+                                        </defs>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-bg"></circle>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-progress" 
+                                                stroke="url(#gradient1)" 
+                                                stroke-dasharray="226.2" 
+                                                stroke-dashoffset="34"></circle>
+                                    </svg>
+                                    <div class="progress-text">85%</div>
+                                </div>
+                                <p class="text-slate-400 font-medium">JavaScript/React</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="progress-ring">
+                                    <svg>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-bg"></circle>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-progress" 
+                                                stroke="url(#gradient1)" 
+                                                stroke-dasharray="226.2" 
+                                                stroke-dashoffset="45"></circle>
+                                    </svg>
+                                    <div class="progress-text">80%</div>
+                                </div>
+                                <p class="text-slate-400 font-medium">Node.js/Express</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="progress-ring">
+                                    <svg>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-bg"></circle>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-progress" 
+                                                stroke="url(#gradient1)" 
+                                                stroke-dasharray="226.2" 
+                                                stroke-dashoffset="56"></circle>
+                                    </svg>
+                                    <div class="progress-text">75%</div>
+                                </div>
+                                <p class="text-slate-400 font-medium">UI/UX Design</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="progress-ring">
+                                    <svg>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-bg"></circle>
+                                        <circle cx="40" cy="40" r="36" class="progress-ring-progress" 
+                                                stroke="url(#gradient1)" 
+                                                stroke-dasharray="226.2" 
+                                                stroke-dashoffset="68"></circle>
+                                    </svg>
+                                    <div class="progress-text">70%</div>
+                                </div>
+                                <p class="text-slate-400 font-medium">Database</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Stack -->
+                    <div class="glass-card p-8">
+                        <h3 class="text-3xl font-bold mb-8 gradient-text">Tech Stack</h3>
+                        <div class="grid grid-cols-4 gap-4 mb-8">
+                            <div class="tech-icon">⚛️</div>
+                            <div class="tech-icon">🟢</div>
+                            <div class="tech-icon">🎨</div>
+                            <div class="tech-icon">🗄️</div>
+                            <div class="tech-icon">🐍</div>
+                            <div class="tech-icon">☁️</div>
+                            <div class="tech-icon">🔧</div>
+                            <div class="tech-icon">📱</div>
+                        </div>
+                        
+                        <div class="focus-highlight">
+                            <h4 class="font-semibold mb-2">Current Focus</h4>
+                            <p class="text-slate-300">Exploring AI integration in web development and experimenting with Web3 technologies.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     </section>
 
     <!-- Services Section -->
