@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Cursor Trail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #canvas {
+            display: block;
+            cursor: none;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <canvas id="canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+    
+    <div class="absolute top-4 left-4 z-10 text-white text-sm font-mono opacity-75">
+        <p>Move your mouse to see the trail effect</p>
+    </div>
+
+    <script>
+        // Wave function for color animation
+        function Wave(options) {
+            this.init(options || {});
+        }
+        
+        Wave.prototype = {
+            init: function(options) {
+                this.phase = options.phase || 0;
+                this.offset = options.offset || 0;
+                this.frequency = options.frequency || 0.001;
+                this.amplitude = options.amplitude || 1;
+                this.value = 0;
+            },
+            update: function() {
+                this.phase += this.frequency;
+                this.value = this.offset + Math.sin(this.phase) * this.amplitude;
+                return this.value;
+            },
+            getValue: function() {
+                return this.value;
+            }
+        };
+
+        // Node class for trail points
+        function Node() {
+            this.x = 0;
+            this.y = 0;
+            this.vy = 0;
+            this.vx = 0;
+        }
+
+        // Line class for trail lines
+        function Line(options) {
+            this.init(options || {});
+        }
+
+        Line.prototype = {
+            init: function(options) {
+                this.spring = (options.spring || 0.4) + 0.1 * Math.random() - 0.02;
+                this.friction = config.friction + 0.01 * Math.random() - 0.002;
+                this.nodes = [];
+                
+                for (var i = 0; i < config.size; i++) {
+                    var node = new Node();
+                    node.x = mousePos.x;
+                    node.y = mousePos.y;
+                    this.nodes.push(node);
+                }
+            },
+            update: function() {
+                var spring = this.spring;
+                var firstNode = this.nodes[0];
+                
+                firstNode.vx += (mousePos.x - firstNode.x) * spring;
+                firstNode.vy += (mousePos.y - firstNode.y) * spring;
+                
+                for (var i = 0; i < this.nodes.length; i++) {
+                    var node = this.nodes[i];
+                    
+                    if (i > 0) {
+                        var prevNode = this.nodes[i - 1];
+                        node.vx += (prevNode.x - node.x) * spring;
+                        node.vy += (prevNode.y - node.y) * spring;
+                        node.vx += prevNode.vx * config.dampening;
+                        node.vy += prevNode.vy * config.dampening;
+                    }
+                    
+                    node.vx *= this.friction;
+                    node.vy *= this.friction;
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    
+                    spring *= config.tension;
+                }
+            },
+            draw: function() {
+                var firstNode = this.nodes[0];
+                var x = firstNode.x;
+                var y = firstNode.y;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                
+                for (var i = 1; i < this.nodes.length - 2; i++) {
+                    var node = this.nodes[i];
+                    var nextNode = this.nodes[i + 1];
+                    x = 0.5 * (node.x + nextNode.x);
+                    y = 0.5 * (node.y + nextNode.y);
+                    ctx.quadraticCurveTo(node.x, node.y, x, y);
+                }
+                
+                var lastNode = this.nodes[this.nodes.length - 2];
+                var finalNode = this.nodes[this.nodes.length - 1];
+                ctx.quadraticCurveTo(lastNode.x, lastNode.y, finalNode.x, finalNode.y);
+                ctx.stroke();
+                ctx.closePath();
+            }
+        };
+
+        // Global variables
+        var ctx;
+        var colorWave;
+        var mousePos = { x: 0, y: 0 };
+        var lines = [];
+        var isRunning = false;
+        var config = {
+            debug: true,
+            friction: 0.5,
+            trails: 20,
+            size: 50,
+            dampening: 0.25,
+            tension: 0.98
+        };
+
+        // Initialize lines
+        function initLines() {
+            lines = [];
+            for (var i = 0; i < config.trails; i++) {
+                lines.push(new Line({ 
+                    spring: 0.4 + (i / config.trails) * 0.025 
+                }));
+            }
+        }
+
+        // Handle mouse movement
+        function handleMouseMove(e) {
+            if (e.touches) {
+                mousePos.x = e.touches[0].pageX;
+                mousePos.y = e.touches[0].pageY;
+            } else {
+                mousePos.x = e.clientX;
+                mousePos.y = e.clientY;
+            }
+            e.preventDefault();
+        }
+
+        // Handle touch start
+        function handleTouchStart(e) {
+            if (e.touches.length === 1) {
+                mousePos.x = e.touches[0].pageX;
+                mousePos.y = e.touches[0].pageY;
+            }
+        }
+
+        // Render function
+        function render() {
+            if (!isRunning) return;
+
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.globalCompositeOperation = 'lighter';
+            ctx.strokeStyle = 'hsla(' + Math.round(colorWave.update()) + ',50%,50%,0.2)';
+            ctx.lineWidth = 1;
+
+            for (var i = 0; i < config.trails; i++) {
+                var line = lines[i];
+                line.update();
+                line.draw();
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        // Resize canvas
+        function resizeCanvas() {
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+        }
+
+        // Initialize everything
+        function init() {
+            var canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            isRunning = true;
+
+            colorWave = new Wave({
+                phase: Math.random() * 2 * Math.PI,
+                amplitude: 85,
+                frequency: 0.0015,
+                offset: 285
+            });
+
+            // Set initial mouse position to center
+            mousePos.x = window.innerWidth / 2;
+            mousePos.y = window.innerHeight / 2;
+
+            initLines();
+            resizeCanvas();
+
+            // Add event listeners
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('touchmove', handleMouseMove);
+            document.addEventListener('touchstart', handleTouchStart);
+            window.addEventListener('resize', resizeCanvas);
+            
+            window.addEventListener('focus', function() {
+                if (!isRunning) {
+                    isRunning = true;
+                    render();
+                }
+            });
+            
+            window.addEventListener('blur', function() {
+                isRunning = false;
+            });
+
+            // Start rendering
+            render();
+        }
+
+        // Start when page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
