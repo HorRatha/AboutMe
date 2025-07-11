@@ -1,5 +1,4 @@
-
-        /* Liquid Metal Developer Vibe */
+/* Liquid Metal Developer Vibe */
         .liquid-vibe {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #1a1a2e 75%, #16213e 100%);
             background-size: 400% 400%;
@@ -43,6 +42,7 @@
             color: transparent;
             animation: textVibe 4s ease-in-out infinite;
             text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            font-size: 1.5rem; /* Reduced from 3xl */
         }
         
         @keyframes textVibe {
@@ -58,9 +58,10 @@
             position: relative;
             transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            padding: 12px 24px;
+            padding: 8px 16px; /* Reduced from 12px 24px */
             border-radius: 12px;
             transform-style: preserve-3d;
+            font-size: 1rem; /* Reduced from lg */
         }
         
         /* Advanced Hover Effects */
@@ -149,7 +150,7 @@
             background: linear-gradient(45deg, #64ffda, #00bcd4);
             color: #1a1a2e;
             border: none;
-            padding: 12px 24px;
+            padding: 8px 16px; /* Reduced from 12px 24px */
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -159,6 +160,7 @@
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
+            font-size: 0.875rem; /* Slightly smaller text */
         }
         
         .cta-button::before {
@@ -193,8 +195,8 @@
             display: none;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border-radius: 20px;
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 15px; /* Reduced from 20px */
+            padding: 15px; /* Reduced from 20px */
             backdrop-filter: blur(10px);
             border: 1px solid rgba(100, 255, 218, 0.2);
         }
@@ -210,8 +212,8 @@
         }
         
         .mobile-menu .nav-link {
-            padding: 16px 20px;
-            margin: 8px 0;
+            padding: 12px 16px; /* Reduced from 16px 20px */
+            margin: 6px 0; /* Reduced from 8px 0 */
             border-radius: 16px;
         }
         
@@ -224,7 +226,7 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
-            padding: 10px;
+            padding: 8px; /* Reduced from 10px */
             transition: transform 0.3s ease;
         }
         
@@ -233,10 +235,10 @@
         }
         
         .hamburger span {
-            width: 25px;
-            height: 3px;
+            width: 22px; /* Reduced from 25px */
+            height: 2px; /* Reduced from 3px */
             background: #64ffda;
-            margin: 3px 0;
+            margin: 2px 0; /* Reduced from 3px 0 */
             transition: 0.3s;
             box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
         }
@@ -262,4 +264,3 @@
                 display: none;
             }
         }
-    

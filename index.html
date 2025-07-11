@@ -431,69 +431,69 @@
 
     <!-- Enhanced Liquid Vibe Navbar -->
     <nav class="fixed w-full z-50 px-2">
-        <div class="max-w-6xl mx-auto liquid-vibe p-6 navbar-container">
-            <div class="flex items-center justify-between relative z-10">
-                <!-- Logo -->
-                <div class="text-3xl vibe-text">
-                    Man
-                </div>
-                
-                <!-- Desktop Menu with Enhanced Hover Effects -->
-                <div class="hidden md:flex space-x-2 desktop-menu">
-                    <a href="#hero" class="nav-link text-lg">
-                        <span class="link-text">Home</span>
-                    </a>
-                    <a href="#about" class="nav-link text-lg">
-                        <span class="link-text">About</span>
-                    </a>
-                    <a href="#services" class="nav-link text-lg">
-                        <span class="link-text">Services</span>
-                    </a>
-                    <a href="#projects" class="nav-link text-lg">
-                        <span class="link-text">Projects</span>
-                    </a>
-                    <a href="#contact" class="nav-link text-lg">
-                        <span class="link-text">Contact</span>
-                    </a>
-                </div>
-                
-                <!-- Enhanced CTA Button -->
-                <button class="cta-button hidden md:block">
-                    HIRE DEV
-                </button>
-                
-                <!-- Mobile Hamburger -->
-                <div class="hamburger md:hidden" onclick="toggleMobileMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+    <div class="max-w-6xl mx-auto liquid-vibe py-3 px-6 navbar-container">
+        <div class="flex items-center justify-between relative z-10">
+            <!-- Logo -->
+            <div class="vibe-text">
+                Man
             </div>
             
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu md:hidden">
-                <div class="flex flex-col space-y-2">
-                    <a href="#hero" class="nav-link text-lg">
-                        <span class="link-text">Home</span>
-                    </a>
-                    <a href="#about" class="nav-link text-lg">
-                        <span class="link-text">About</span>
-                    </a>
-                    <a href="#services" class="nav-link text-lg">
-                        <span class="link-text">Services</span>
-                    </a>
-                    <a href="#projects" class="nav-link text-lg">
-                        <span class="link-text">Projects</span>
-                    </a>
-                    <a href="#contact" class="nav-link text-lg">
-                        <span class="link-text">Contact</span>
-                    </a>
-                    <button class="cta-button mt-4">
-                        HIRE DEV
-                    </button>
-                </div>
+            <!-- Desktop Menu with Enhanced Hover Effects -->
+            <div class="hidden md:flex space-x-1 desktop-menu">
+                <a href="#hero" class="nav-link">
+                    <span class="link-text">Home</span>
+                </a>
+                <a href="#about" class="nav-link">
+                    <span class="link-text">About</span>
+                </a>
+                <a href="#services" class="nav-link">
+                    <span class="link-text">Services</span>
+                </a>
+                <a href="#projects" class="nav-link">
+                    <span class="link-text">Projects</span>
+                </a>
+                <a href="#contact" class="nav-link">
+                    <span class="link-text">Contact</span>
+                </a>
+            </div>
+            
+            <!-- Enhanced CTA Button -->
+            <button class="cta-button hidden md:block">
+                HIRE DEV
+            </button>
+            
+            <!-- Mobile Hamburger -->
+            <div class="hamburger md:hidden" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden">
+            <div class="flex flex-col space-y-1">
+                <a href="#hero" class="nav-link">
+                    <span class="link-text">Home</span>
+                </a>
+                <a href="#about" class="nav-link">
+                    <span class="link-text">About</span>
+                </a>
+                <a href="#services" class="nav-link">
+                    <span class="link-text">Services</span>
+                </a>
+                <a href="#projects" class="nav-link">
+                    <span class="link-text">Projects</span>
+                </a>
+                <a href="#contact" class="nav-link">
+                    <span class="link-text">Contact</span>
+                </a>
+                <button class="cta-button mt-3">
+                    HIRE DEV
+                </button>
+            </div>
+        </div>
+    </div>
     </nav>
 
     <!-- Hero Section -->
@@ -504,7 +504,7 @@
         
         <!-- Portfolio Content -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="text-center max-w-4xl mx-auto px-8 pointer-events-auto">
+            <div class="text-center max-w-4xl mx-auto px-4 sm:px-8 pointer-events-auto">
                 <!-- Background overlay for better text readability -->
                 <div class="absolute inset-0 bg-black/70 rounded-3xl border border-green-500/20 shadow-2xl" style="backdrop-filter: blur(1px);"></div>
                 
@@ -512,9 +512,10 @@
                 <section class="portfolio-hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
                     <!-- Hero Content -->
                     <div class="portfolio-hero-content px-4 max-w-6xl mx-auto w-full">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh]">
+                        <!-- Mobile Layout: Centered Column -->
+                        <div class="lg:hidden flex flex-col items-center justify-center text-center min-h-[80vh] py-8">
                             <!-- Avatar Section -->
-                            <div class="flex justify-center order-1 lg:order-1 mt-8 lg:mt-0 mb-8 lg:mb-0">
+                            <div class="flex justify-center mb-8">
                                 <div class="portfolio-avatar-container portfolio-avatar-hexagon">
                                     <div class="portfolio-avatar-ring">
                                         <div class="portfolio-avatar-inner">
@@ -527,7 +528,47 @@
                             </div>
                             
                             <!-- Content Section -->
-                            <div class="text-center lg:text-left order-2 lg:order-2 portfolio-mobile-spacing">
+                            <div class="text-center">
+                                <!-- Status Badge -->
+                                <div class="portfolio-status-badge inline-flex items-center px-4 py-2 rounded-full portfolio-glass-effect text-white text-sm font-medium mb-6">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                                    Available for new projects
+                                </div>
+                                
+                                <!-- Main Title -->
+                                <h1 class="portfolio-hero-title text-3xl sm:text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg text-green-500">
+                                    Hi, I'm
+                                    <br class="block">
+                                    <span class="portfolio-typewriter">Hor Ratha</span>
+                                </h1>
+                                
+                                <!-- Subtitle -->
+                                <p class="portfolio-hero-subtitle text-lg sm:text-xl md:text-2xl mb-8 text-gray-200 drop-shadow-md font-light">
+                                    Full Stack Developer & 
+                                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold">
+                                        Designer
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Desktop Layout: Side by Side -->
+                        <div class="hidden lg:grid grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh]">
+                            <!-- Avatar Section -->
+                            <div class="flex justify-center order-1">
+                                <div class="portfolio-avatar-container portfolio-avatar-hexagon">
+                                    <div class="portfolio-avatar-ring">
+                                        <div class="portfolio-avatar-inner">
+                                            <img src="image/image.png" 
+                                                 alt="Hor Ratha" 
+                                                 class="portfolio-avatar-image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="text-left order-2">
                                 <!-- Status Badge -->
                                 <div class="portfolio-status-badge inline-flex items-center px-4 py-2 rounded-full portfolio-glass-effect text-white text-sm font-medium mb-6">
                                     <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
