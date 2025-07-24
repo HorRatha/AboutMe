@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Icon Cloud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        canvas {
+            cursor: grab;
+        }
+        canvas:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Interactive 3D Icon Cloud</h1>
+            <p class="text-gray-600">Click on icons to focus them, or drag to rotate the sphere</p>
+        </div>
+        
+        <div class="flex justify-center">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <canvas 
+                    id="iconCanvas" 
+                    width="400" 
+                    height="400"
+                    class="rounded-lg border border-gray-200"
+                    aria-label="Interactive 3D Icon Cloud"
+                    role="img">
+                </canvas>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="font-semibold text-gray-800 mb-2">Interact</h3>
+                    <p class="text-sm text-gray-600">Click icons to focus them in the center</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="font-semibold text-gray-800 mb-2">Rotate</h3>
+                    <p class="text-sm text-gray-600">Drag to manually rotate the sphere</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="font-semibold text-gray-800 mb-2">Auto-spin</h3>
+                    <p class="text-sm text-gray-600">Moves automatically based on mouse position</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="font-semibold text-gray-800 mb-2">3D Effect</h3>
+                    <p class="text-sm text-gray-600">Icons scale and fade based on depth</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class IconCloud {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.iconPositions = [];
+                this.rotation = { x: 0, y: 0 };
+                this.isDragging = false;
+                this.lastMousePos = { x: 0, y: 0 };
+                this.mousePos = { x: 0, y: 0 };
+                this.targetRotation = null;
+                this.animationFrameId = null;
+                this.iconCanvases = [];
+                this.imagesLoaded = [];
+                
+                // Sample icon URLs (you can replace these with your own)
+                this.images = [
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/javascript.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/react.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/nodejs.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/python.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/typescript.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/html5.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/css3.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/git.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/docker.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/mongodb.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/mysql.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/postgresql.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/vue-dot-js.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/angular.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tailwindcss.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/bootstrap.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/sass.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/webpack.svg',
+                    'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/npm.svg'
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                this.createIconCanvases();
+                this.generateIconPositions();
+                this.setupEventListeners();
+                this.animate();
+            }
+            
+            createIconCanvases() {
+                this.iconCanvases = [];
+                this.imagesLoaded = new Array(this.images.length).fill(false);
+                
+                this.images.forEach((imageSrc, index) => {
+                    const offscreen = document.createElement('canvas');
+                    offscreen.width = 40;
+                    offscreen.height = 40;
+                    const offCtx = offscreen.getContext('2d');
+                    
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.src = imageSrc;
+                    
+                    img.onload = () => {
+                        offCtx.clearRect(0, 0, 40, 40);
+                        
+                        // Create circular clipping path
+                        offCtx.beginPath();
+                        offCtx.arc(20, 20, 18, 0, Math.PI * 2);
+                        offCtx.closePath();
+                        offCtx.clip();
+                        
+                        // Fill with white background
+                        offCtx.fillStyle = 'white';
+                        offCtx.fill();
+                        
+                        // Draw the image
+                        offCtx.drawImage(img, 2, 2, 36, 36);
+                        
+                        this.imagesLoaded[index] = true;
+                    };
+                    
+                    img.onerror = () => {
+                        // Fallback: create a colored circle with number
+                        offCtx.clearRect(0, 0, 40, 40);
+                        offCtx.beginPath();
+                        offCtx.arc(20, 20, 18, 0, Math.PI * 2);
+                        offCtx.fillStyle = `hsl(${(index * 137.5) % 360}, 70%, 50%)`;
+                        offCtx.fill();
+                        
+                        offCtx.fillStyle = 'white';
+                        offCtx.textAlign = 'center';
+                        offCtx.textBaseline = 'middle';
+                        offCtx.font = '12px Arial';
+                        offCtx.fillText(`${index + 1}`, 20, 20);
+                        
+                        this.imagesLoaded[index] = true;
+                    };
+                    
+                    this.iconCanvases.push(offscreen);
+                });
+            }
+            
+            generateIconPositions() {
+                this.iconPositions = [];
+                const numIcons = this.images.length;
+                
+                // Fibonacci sphere distribution
+                const offset = 2 / numIcons;
+                const increment = Math.PI * (3 - Math.sqrt(5));
+                
+                for (let i = 0; i < numIcons; i++) {
+                    const y = i * offset - 1 + offset / 2;
+                    const r = Math.sqrt(1 - y * y);
+                    const phi = i * increment;
+                    
+                    const x = Math.cos(phi) * r;
+                    const z = Math.sin(phi) * r;
+                    
+                    this.iconPositions.push({
+                        x: x * 100,
+                        y: y * 100,
+                        z: z * 100,
+                        scale: 1,
+                        opacity: 1,
+                        id: i
+                    });
+                }
+            }
+            
+            setupEventListeners() {
+                this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+                this.canvas.addEventListener('mouseup', () => this.handleMouseUp());
+                this.canvas.addEventListener('mouseleave', () => this.handleMouseUp());
+            }
+            
+            handleMouseDown(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Check if clicking on an icon
+                for (let icon of this.iconPositions) {
+                    const cosX = Math.cos(this.rotation.x);
+                    const sinX = Math.sin(this.rotation.x);
+                    const cosY = Math.cos(this.rotation.y);
+                    const sinY = Math.sin(this.rotation.y);
+                    
+                    const rotatedX = icon.x * cosY - icon.z * sinY;
+                    const rotatedZ = icon.x * sinY + icon.z * cosY;
+                    const rotatedY = icon.y * cosX + rotatedZ * sinX;
+                    
+                    const screenX = this.canvas.width / 2 + rotatedX;
+                    const screenY = this.canvas.height / 2 + rotatedY;
+                    
+                    const scale = (rotatedZ + 200) / 300;
+                    const radius = 20 * scale;
+                    const dx = x - screenX;
+                    const dy = y - screenY;
+                    
+                    if (dx * dx + dy * dy < radius * radius) {
+                        this.focusIcon(icon);
+                        return;
+                    }
+                }
+                
+                // Start dragging
+                this.isDragging = true;
+                this.lastMousePos = { x: e.clientX, y: e.clientY };
+            }
+            
+            handleMouseMove(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                this.mousePos = { x, y };
+                
+                if (this.isDragging) {
+                    const deltaX = e.clientX - this.lastMousePos.x;
+                    const deltaY = e.clientY - this.lastMousePos.y;
+                    
+                    this.rotation.x += deltaY * 0.002;
+                    this.rotation.y += deltaX * 0.002;
+                    
+                    this.lastMousePos = { x: e.clientX, y: e.clientY };
+                }
+            }
+            
+            handleMouseUp() {
+                this.isDragging = false;
+            }
+            
+            focusIcon(icon) {
+                const targetX = -Math.atan2(icon.y, Math.sqrt(icon.x * icon.x + icon.z * icon.z));
+                const targetY = Math.atan2(icon.x, icon.z);
+                
+                const distance = Math.sqrt(
+                    Math.pow(targetX - this.rotation.x, 2) + 
+                    Math.pow(targetY - this.rotation.y, 2)
+                );
+                
+                const duration = Math.min(2000, Math.max(800, distance * 1000));
+                
+                this.targetRotation = {
+                    x: targetX,
+                    y: targetY,
+                    startX: this.rotation.x,
+                    startY: this.rotation.y,
+                    distance,
+                    startTime: performance.now(),
+                    duration
+                };
+            }
+            
+            easeOutCubic(t) {
+                return 1 - Math.pow(1 - t, 3);
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                const centerX = this.canvas.width / 2;
+                const centerY = this.canvas.height / 2;
+                const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
+                const dx = this.mousePos.x - centerX;
+                const dy = this.mousePos.y - centerY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const speed = 0.003 + (distance / maxDistance) * 0.01;
+                
+                // Handle target rotation animation
+                if (this.targetRotation) {
+                    const elapsed = performance.now() - this.targetRotation.startTime;
+                    const progress = Math.min(1, elapsed / this.targetRotation.duration);
+                    const easedProgress = this.easeOutCubic(progress);
+                    
+                    this.rotation.x = this.targetRotation.startX + 
+                        (this.targetRotation.x - this.targetRotation.startX) * easedProgress;
+                    this.rotation.y = this.targetRotation.startY + 
+                        (this.targetRotation.y - this.targetRotation.startY) * easedProgress;
+                    
+                    if (progress >= 1) {
+                        this.targetRotation = null;
+                    }
+                } else if (!this.isDragging) {
+                    // Auto-rotation based on mouse position
+                    this.rotation.x += (dy / this.canvas.height) * speed;
+                    this.rotation.y += (dx / this.canvas.width) * speed;
+                }
+                
+                // Render icons
+                this.iconPositions.forEach((icon, index) => {
+                    const cosX = Math.cos(this.rotation.x);
+                    const sinX = Math.sin(this.rotation.x);
+                    const cosY = Math.cos(this.rotation.y);
+                    const sinY = Math.sin(this.rotation.y);
+                    
+                    const rotatedX = icon.x * cosY - icon.z * sinY;
+                    const rotatedZ = icon.x * sinY + icon.z * cosY;
+                    const rotatedY = icon.y * cosX + rotatedZ * sinX;
+                    
+                    const scale = (rotatedZ + 200) / 300;
+                    const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 150) / 200));
+                    
+                    this.ctx.save();
+                    this.ctx.translate(
+                        this.canvas.width / 2 + rotatedX,
+                        this.canvas.height / 2 + rotatedY
+                    );
+                    this.ctx.scale(scale, scale);
+                    this.ctx.globalAlpha = opacity;
+                    
+                    if (this.iconCanvases[index] && this.imagesLoaded[index]) {
+                        this.ctx.drawImage(this.iconCanvases[index], -20, -20, 40, 40);
+                    }
+                    
+                    this.ctx.restore();
+                });
+                 
+                this.animationFrameId = requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize the icon cloud when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new IconCloud('iconCanvas');
+        });
+    </script>
+</body>
+</html>

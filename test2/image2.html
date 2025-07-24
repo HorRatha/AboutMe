@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Gallery with Pixel Transition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Figtree', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+        }
+        .gallery-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .gallery-track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            display: flex;
+            transition: transform 0.1s ease-out;
+            cursor: grab;
+        }
+        .gallery-track:active {
+            cursor: grabbing;
+        }
+        .gallery-item {
+            position: relative;
+            width: 350px;
+            height: 250px;
+            margin: 0 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex-shrink: 0;
+        }
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 30px 20px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        .pixel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .pixel-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .pixel {
+            position: absolute;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: none;
+            border-radius: 2px;
+        }
+        .hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 5;
+        }
+        .hover-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-description {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #ccc;
+            max-width: 80%;
+        }
+        .gallery-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 20;
+        }
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .gallery-info {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gallery-info h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .gallery-info p {
+            margin: 0;
+            opacity: 0.8;
+        }
+        @media (max-width: 768px) {
+            .gallery-item {
+                width: 280px;
+                height: 200px;
+            }
+            .hover-text {
+                font-size: 2rem;
+            }
+            .gallery-info {
+                top: 20px;
+                left: 20px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="gallery-info">
+            <h1>Interactive Gallery</h1>
+            <p>Drag to explore • Hover for effects</p>
+        </div>
+        
+        <div class="gallery-track" id="gallery-track">
+            <!-- Gallery items will be populated by JavaScript -->
+        </div>
+        
+        <div class="pixel-overlay" id="pixel-overlay">
+            <div class="pixel-grid" id="pixel-grid"></div>
+            <div class="hover-overlay" id="hover-overlay">
+                <div class="hover-text">Explore</div>
+                <div class="hover-description">Discover amazing visuals with interactive pixel transitions</div>
+            </div>
+        </div>
+        
+        <div class="gallery-controls">
+            <button class="control-btn" id="prev-btn">← Previous</button>
+            <button class="control-btn" id="next-btn">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        class PixelTransition {
+            constructor(container, gridSize = 8, animationDuration = 0.5) {
+                this.container = container;
+                this.gridSize = gridSize;
+                this.animationDuration = animationDuration;
+                this.isActive = false;
+                this.delayedCall = null;
+                this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                this.init();
+            }
+
+            init() {
+                this.pixelGrid = document.getElementById('pixel-grid');
+                this.hoverOverlay = document.getElementById('hover-overlay');
+                this.createPixelGrid();
+                this.bindEvents();
+            }
+
+            createPixelGrid() {
+                this.pixelGrid.innerHTML = '';
+                for (let row = 0; row < this.gridSize; row++) {
+                    for (let col = 0; col < this.gridSize; col++) {
+                        const pixel = document.createElement('div');
+                        pixel.className = 'pixel';
+                        const size = 100 / this.gridSize;
+                        pixel.style.width = `${size}%`;
+                        pixel.style.height = `${size}%`;
+                        pixel.style.left = `${col * size}%`;
+                        pixel.style.top = `${row * size}%`;
+                        this.pixelGrid.appendChild(pixel);
+                    }
+                }
+            }
+
+            animatePixels(activate) {
+                this.isActive = activate;
+                const pixels = this.pixelGrid.querySelectorAll('.pixel');
+                if (!pixels.length) return;
+
+                gsap.killTweensOf(pixels);
+                if (this.delayedCall) {
+                    this.delayedCall.kill();
+                }
+
+                gsap.set(pixels, { display: 'none' });
+                const staggerDuration = this.animationDuration / pixels.length;
+
+                gsap.to(pixels, {
+                    display: 'block',
+                    duration: 0,
+                    stagger: { each: staggerDuration, from: 'random' }
+                });
+
+                this.delayedCall = gsap.delayedCall(this.animationDuration, () => {
+                    this.hoverOverlay.style.display = activate ? 'flex' : 'none';
+                });
+
+                gsap.to(pixels, {
+                    display: 'none',
+                    duration: 0,
+                    delay: this.animationDuration,
+                    stagger: { each: staggerDuration, from: 'random' }
+                });
+            }
+
+            bindEvents() {
+                if (!this.isTouchDevice) {
+                    this.container.addEventListener('mouseenter', () => {
+                        if (!this.isActive) this.animatePixels(true);
+                    });
+                    this.container.addEventListener('mouseleave', () => {
+                        if (this.isActive) this.animatePixels(false);
+                    });
+                } else {
+                    this.container.addEventListener('click', (e) => {
+                        if (!e.target.closest('.gallery-item') && !e.target.closest('.control-btn')) {
+                            this.animatePixels(!this.isActive);
+                        }
+                    });
+                }
+            }
+        }
+
+        class CircularGallery {
+            constructor(container) {
+                this.container = container;
+                this.track = document.getElementById('gallery-track');
+                this.currentIndex = 0;
+                this.isDown = false;
+                this.startX = 0;
+                this.scrollLeft = 0;
+                this.translateX = 0;
+                
+                this.items = [
+                    { image: "https://picsum.photos/seed/1/800/600", title: "Mountain Vista" },
+                    { image: "https://picsum.photos/seed/2/800/600", title: "Urban Lights" },
+                    { image: "https://picsum.photos/seed/3/800/600", title: "Ocean Waves" },
+                    { image: "https://picsum.photos/seed/4/800/600", title: "Forest Path" },
+                    { image: "https://picsum.photos/seed/5/800/600", title: "Desert Sunset" },
+                    { image: "https://picsum.photos/seed/6/800/600", title: "City Skyline" },
+                    { image: "https://picsum.photos/seed/7/800/600", title: "Coastal View" },
+                    { image: "https://picsum.photos/seed/8/800/600", title: "Valley Mist" },
+                    { image: "https://picsum.photos/seed/9/800/600", title: "River Bend" },
+                    { image: "https://picsum.photos/seed/10/800/600", title: "Alpine Lake" },
+                    { image: "https://picsum.photos/seed/11/800/600", title: "Prairie Dawn" },
+                    { image: "https://picsum.photos/seed/12/800/600", title: "Autumn Colors" }
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.createItems();
+                this.bindEvents();
+                this.updatePosition();
+            }
+
+            createItems() {
+                // Create multiple copies for infinite scroll effect
+                const allItems = [...this.items, ...this.items, ...this.items];
+                
+                allItems.forEach((item, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}" loading="lazy">
+                        <div class="gallery-item-title">${item.title}</div>
+                    `;
+                    this.track.appendChild(galleryItem);
+                });
+
+                // Start from middle set
+                this.currentIndex = this.items.length;
+                this.translateX = -this.currentIndex * 370; // 350px width + 20px margin
+            }
+
+            updatePosition() {
+                gsap.to(this.track, {
+                    x: this.translateX,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+
+                // Apply curved effect using transform
+                const items = this.track.querySelectorAll('.gallery-item');
+                items.forEach((item, index) => {
+                    const offset = index - this.currentIndex;
+                    const absOffset = Math.abs(offset);
+                    const curve = Math.min(absOffset * 15, 45); // Max 45deg curve
+                    const yOffset = absOffset * 10; // Vertical offset
+                    
+                    gsap.to(item, {
+                        rotationY: offset > 0 ? curve : -curve,
+                        y: yOffset,
+                        scale: 1 - (absOffset * 0.1),
+                        duration: 0.8,
+                        ease: "power2.out"
+                    });
+                });
+            }
+
+            next() {
+                this.currentIndex++;
+                this.translateX -= 370;
+                this.updatePosition();
+                this.checkInfiniteScroll();
+            }
+
+            prev() {
+                this.currentIndex--;
+                this.translateX += 370;
+                this.updatePosition();
+                this.checkInfiniteScroll();
+            }
+
+            checkInfiniteScroll() {
+                const totalItems = this.track.children.length;
+                const itemsPerSet = this.items.length;
+                
+                if (this.currentIndex >= totalItems - itemsPerSet) {
+                    // Jump to beginning
+                    this.currentIndex = itemsPerSet;
+                    this.translateX = -this.currentIndex * 370;
+                    setTimeout(() => this.updatePosition(), 0);
+                } else if (this.currentIndex < itemsPerSet) {
+                    // Jump to end
+                    this.currentIndex = totalItems - itemsPerSet * 2;
+                    this.translateX = -this.currentIndex * 370;
+                    setTimeout(() => this.updatePosition(), 0);
+                }
+            }
+
+            bindEvents() {
+                // Mouse events
+                this.track.addEventListener('mousedown', (e) => {
+                    this.isDown = true;
+                    this.startX = e.pageX - this.translateX;
+                    this.track.style.cursor = 'grabbing';
+                });
+
+                this.track.addEventListener('mousemove', (e) => {
+                    if (!this.isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - this.startX;
+                    this.translateX = x;
+                    this.track.style.transform = `translateX(${this.translateX}px)`;
+                });
+
+                this.track.addEventListener('mouseup', () => {
+                    this.isDown = false;
+                    this.track.style.cursor = 'grab';
+                    this.snapToNearest();
+                });
+
+                this.track.addEventListener('mouseleave', () => {
+                    this.isDown = false;
+                    this.track.style.cursor = 'grab';
+                });
+
+                // Touch events
+                this.track.addEventListener('touchstart', (e) => {
+                    this.isDown = true;
+                    this.startX = e.touches[0].pageX - this.translateX;
+                });
+
+                this.track.addEventListener('touchmove', (e) => {
+                    if (!this.isDown) return;
+                    const x = e.touches[0].pageX - this.startX;
+                    this.translateX = x;
+                    this.track.style.transform = `translateX(${this.translateX}px)`;
+                });
+
+                this.track.addEventListener('touchend', () => {
+                    this.isDown = false;
+                    this.snapToNearest();
+                });
+
+                // Wheel event
+                this.container.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    if (e.deltaY > 0) {
+                        this.next();
+                    } else {
+                        this.prev();
+                    }
+                });
+
+                // Control buttons
+                document.getElementById('prev-btn').addEventListener('click', () => this.prev());
+                document.getElementById('next-btn').addEventListener('click', () => this.next());
+            }
+
+            snapToNearest() {
+                const nearestIndex = Math.round(-this.translateX / 370);
+                this.currentIndex = nearestIndex;
+                this.translateX = -this.currentIndex * 370;
+                this.updatePosition();
+                this.checkInfiniteScroll();
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.gallery-container');
+            const gallery = new CircularGallery(container);
+            const pixelTransition = new PixelTransition(container);
+        });
+    </script>
+</body>
+</html>

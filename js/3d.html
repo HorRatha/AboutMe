@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Tech Interface</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+        }
+        
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .tech-interface {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            cursor: grab;
+            user-select: none;
+        }
+        
+        .tech-interface:active {
+            cursor: grabbing;
+        }
+        
+        .central-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #00ffff, #0099cc);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 255, 0.6),
+                inset 0 0 20px rgba(0, 255, 255, 0.3);
+            animation: centralPulse 3s ease-in-out infinite;
+            z-index: 10;
+        }
+        
+        .central-gear {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ffffff, #cccccc);
+            border-radius: 50%;
+            position: relative;
+            animation: rotateCentral 10s linear infinite;
+        }
+        
+        .central-gear::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #666666, #333333);
+            border-radius: 50%;
+        }
+        
+        .gear-tooth {
+            position: absolute;
+            width: 8px;
+            height: 16px;
+            background: linear-gradient(45deg, #ffffff, #cccccc);
+            border-radius: 2px;
+        }
+        
+        .gear-tooth:nth-child(1) { top: -8px; left: calc(50% - 4px); }
+        .gear-tooth:nth-child(2) { top: 8px; right: -8px; transform: rotate(90deg); }
+        .gear-tooth:nth-child(3) { bottom: -8px; left: calc(50% - 4px); }
+        .gear-tooth:nth-child(4) { top: 8px; left: -8px; transform: rotate(90deg); }
+        .gear-tooth:nth-child(5) { top: 2px; right: 2px; transform: rotate(45deg); }
+        .gear-tooth:nth-child(6) { bottom: 2px; right: 2px; transform: rotate(135deg); }
+        .gear-tooth:nth-child(7) { bottom: 2px; left: 2px; transform: rotate(225deg); }
+        .gear-tooth:nth-child(8) { top: 2px; left: 2px; transform: rotate(315deg); }
+        
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rotateOrbit 20s linear infinite;
+        }
+        
+        .orbit-ring-1 {
+            width: 280px;
+            height: 280px;
+            animation-duration: 15s;
+        }
+        
+        .orbit-ring-2 {
+            width: 380px;
+            height: 380px;
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+        
+        .orbit-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.8), rgba(0, 153, 204, 0.8));
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+        
+        .orbit-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+        }
+        
+        .orbit-icon-1 { top: -30px; left: calc(50% - 30px); animation-delay: 0s; }
+        .orbit-icon-2 { top: calc(50% - 30px); right: -30px; animation-delay: 0.5s; }
+        .orbit-icon-3 { bottom: -30px; left: calc(50% - 30px); animation-delay: 1s; }
+        .orbit-icon-4 { top: calc(50% - 30px); left: -30px; animation-delay: 1.5s; }
+        .orbit-icon-5 { top: 20px; right: 20px; animation-delay: 2s; }
+        .orbit-icon-6 { bottom: 20px; right: 20px; animation-delay: 2.5s; }
+        .orbit-icon-7 { bottom: 20px; left: 20px; animation-delay: 3s; }
+        .orbit-icon-8 { top: 20px; left: 20px; animation-delay: 3.5s; }
+        
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.5), transparent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .glowing-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ffff;
+            animation: particleFloat 4s ease-in-out infinite;
+        }
+        
+        @keyframes centralPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
+        @keyframes rotateCentral {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes rotateOrbit {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes particleFloat {
+            0% { transform: translate(0, 0) scale(0); opacity: 0; }
+            20% { transform: translate(10px, -10px) scale(1); opacity: 1; }
+            80% { transform: translate(-10px, 10px) scale(1); opacity: 1; }
+            100% { transform: translate(0, 0) scale(0); opacity: 0; }
+        }
+        
+        .tech-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 10s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="tech-grid"></div>
+    
+    <div id="container">
+        <div class="tech-interface" id="interface">
+            <!-- Central Hub -->
+            <div class="central-hub">
+                <div class="central-gear">
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                </div>
+            </div>
+            
+            <!-- Orbit Ring 1 -->
+            <div class="orbit-ring orbit-ring-1">
+                <div class="orbit-icon orbit-icon-1" data-tooltip="Settings">⚙️</div>
+                <div class="orbit-icon orbit-icon-2" data-tooltip="Analytics">📊</div>
+                <div class="orbit-icon orbit-icon-3" data-tooltip="Network">🌐</div>
+                <div class="orbit-icon orbit-icon-4" data-tooltip="Tools">🔧</div>
+            </div>
+            
+            <!-- Orbit Ring 2 -->
+            <div class="orbit-ring orbit-ring-2">
+                <div class="orbit-icon orbit-icon-5" data-tooltip="Database">🗄️</div>
+                <div class="orbit-icon orbit-icon-6" data-tooltip="Security">🔐</div>
+                <div class="orbit-icon orbit-icon-7" data-tooltip="AI">🤖</div>
+                <div class="orbit-icon orbit-icon-8" data-tooltip="Cloud">☁️</div>
+            </div>
+            
+            <!-- Glowing Particles -->
+            <div class="glowing-particle" style="top: 20%; left: 30%; animation-delay: 0s;"></div>
+            <div class="glowing-particle" style="top: 70%; right: 25%; animation-delay: 1s;"></div>
+            <div class="glowing-particle" style="bottom: 20%; left: 60%; animation-delay: 2s;"></div>
+            <div class="glowing-particle" style="top: 40%; right: 40%; animation-delay: 3s;"></div>
+        </div>
+    </div>
+    
+    <script>
+        const interface = document.getElementById('interface');
+        let isDragging = false;
+        let currentRotation = 0;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let rotationSpeed = 0;
+        let autoRotate = true;
+        
+        // Mouse/Touch interaction
+        interface.addEventListener('mousedown', startDrag);
+        interface.addEventListener('touchstart', startDrag);
+        
+        function startDrag(e) {
+            isDragging = true;
+            autoRotate = false;
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            lastMouseX = clientX;
+            lastMouseY = clientY;
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', stopDrag);
+        }
+        
+        function drag(e) {
+            if (!isDragging) return;
+            
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            
+            const deltaX = clientX - lastMouseX;
+            const deltaY = clientY - lastMouseY;
+            
+            rotationSpeed = deltaX * 0.5;
+            currentRotation += rotationSpeed;
+            
+            interface.style.transform = `rotateY(${currentRotation}deg) rotateX(${-deltaY * 0.2}deg)`;
+            
+            lastMouseX = clientX;
+            lastMouseY = clientY;
+        }
+        
+        function stopDrag() {
+            isDragging = false;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', stopDrag);
+            
+            // Resume auto-rotation after 2 seconds
+            setTimeout(() => {
+                autoRotate = true;
+            }, 2000);
+        }
+        
+        // Auto-rotation
+        function animate() {
+            if (autoRotate && !isDragging) {
+                currentRotation += 0.2;
+                interface.style.transform = `rotateY(${currentRotation}deg)`;
+            }
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // Icon click effects
+        document.querySelectorAll('.orbit-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                this.style.transform = 'scale(1.3)';
+                this.style.boxShadow = '0 0 40px rgba(0, 255, 255, 1)';
+                
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                }, 300);
+            });
+        });
+        
+        // 3D perspective enhancement
+        interface.style.transformStyle = 'preserve-3d';
+        interface.style.perspective = '1000px';
+        
+        // Add dynamic particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'glowing-particle';
+            particle.style.position = 'absolute';
+            particle.style.left = Math.random() * 500 + 'px';
+            particle.style.top = Math.random() * 500 + 'px';
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            interface.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 4000);
+        }
+        
+        setInterval(createParticle, 1000);
+    </script>
+</body>
+</html>
